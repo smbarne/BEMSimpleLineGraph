@@ -6,8 +6,13 @@
 //  Copyright (c) 2015 Boris Emorine. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
+
 
 @interface BEMPermanentPopupView : UIView
+
+@end
+
+@interface BEMPermanentPopupLabel : UILabel
 
 @end
