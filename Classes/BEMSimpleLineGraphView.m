@@ -271,13 +271,16 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
             ![self.delegate noDataLabelEnableForLineGraph:self]) return;
 
         NSLog(@"[BEMSimpleLineGraph] Data source contains no data. A no data label will be displayed and drawing will stop. Add data to the data source and then reload the graph.");
-        
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #if !TARGET_INTERFACE_BUILDER
         self.noDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.viewForBaselineLayout.frame.size.width, self.viewForBaselineLayout.frame.size.height)];
 #else
         self.noDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.viewForBaselineLayout.frame.size.width, self.viewForBaselineLayout.frame.size.height-(self.viewForBaselineLayout.frame.size.height/4))];
 #endif
-        
+#pragma clang diagnostic pop
+
         self.noDataLabel.backgroundColor = [UIColor clearColor];
         self.noDataLabel.textAlignment = NSTextAlignmentCenter;
 
@@ -293,8 +296,11 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
         self.noDataLabel.font = self.noDataLabelFont ?: [UIFont fontWithName:@"HelveticaNeue-Light" size:15];
         self.noDataLabel.textColor = self.noDataLabelColor ?: self.colorLine;
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         [self.viewForBaselineLayout addSubview:self.noDataLabel];
-        
+#pragma clang diagnostic pop
+
         // Let the delegate know that the graph finished layout updates
         if ([self.delegate respondsToSelector:@selector(lineGraphDidFinishLoading:)])
             [self.delegate lineGraphDidFinishLoading:self];
@@ -326,11 +332,14 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
         self.touchInputLine.backgroundColor = self.colorTouchInputLine;
         self.touchInputLine.alpha = 0;
         [self addSubview:self.touchInputLine];
-        
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         self.panView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, self.viewForBaselineLayout.frame.size.width, self.viewForBaselineLayout.frame.size.height)];
         self.panView.backgroundColor = [UIColor clearColor];
         [self.viewForBaselineLayout addSubview:self.panView];
-        
+#pragma clang diagnostic pop
+
         self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleGestureAction:)];
         self.panGesture.delegate = self;
         [self.panGesture setMaximumNumberOfTouches:1];
@@ -839,8 +848,11 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     
     // Add support multi-line, but this might overlap with the graph line if text have too many lines
     labelXAxis.numberOfLines = 0;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     CGRect lRect = [labelXAxis.text boundingRectWithSize:self.viewForBaselineLayout.frame.size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:labelXAxis.font} context:nil];
-    
+#pragma clang diagnostic pop
+
     CGPoint center;
     
     /* OLD LABEL GENERATION CODE
@@ -1310,8 +1322,11 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
 
 
 - (void)handleGestureAction:(UIGestureRecognizer *)recognizer {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     CGPoint translation = [recognizer locationInView:self.viewForBaselineLayout];
-    
+#pragma clang diagnostic pop
+
     if (!((translation.x + self.frame.origin.x) <= self.frame.origin.x) && !((translation.x + self.frame.origin.x) >= self.frame.origin.x + self.frame.size.width)) { // To make sure the vertical line doesn't go beyond the frame of the graph.
         self.touchInputLine.frame = CGRectMake(translation.x - self.widthTouchInputLine/2, 0, self.widthTouchInputLine, self.frame.size.height);
     }
