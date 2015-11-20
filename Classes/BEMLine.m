@@ -193,6 +193,11 @@
         CGContextRestoreGState(ctx);
     }
 
+	if (self.highlightedRange.length != 0 && self.highlightedRange.location != 0) {
+		UIBezierPath *fillRange = [BEMLine linesToPoints:[self bottomPointsWithRange:self.highlightedRange]];
+		[self.rangeColor set];
+		[fillRange fillWithBlendMode:kCGBlendModeNormal alpha:self.bottomAlpha];
+	}
 
     //----------------------------//
     //------ Animate Drawing -----//
@@ -305,6 +310,23 @@
     [bottomPoints insertObject:[NSValue valueWithCGPoint:bottomPointZero] atIndex:0];
     [bottomPoints addObject:[NSValue valueWithCGPoint:bottomPointFull]];
     return bottomPoints;
+}
+
+- (NSArray *)bottomPointsWithRange:(NSRange)range {
+	NSValue *value = [self.points objectAtIndex:range.location];
+	CGPoint p1 = [value CGPointValue];
+	value = [self.points objectAtIndex:range.location + range.length];
+	CGPoint p2 = [value CGPointValue];
+
+	CGPoint bottomPointZero = CGPointMake(p1.x, self.frame.size.height);
+	CGPoint bottomPointFull = CGPointMake(p2.x, self.frame.size.height);
+	CGPoint bottomPointFullZero = CGPointMake(p2.x, p2.y);
+	NSMutableArray *bottomPoints = [NSMutableArray arrayWithArray:[self.points subarrayWithRange:range]];
+	[bottomPoints insertObject:[NSValue valueWithCGPoint:bottomPointZero] atIndex:0];
+
+	[bottomPoints addObject:[NSValue valueWithCGPoint:bottomPointFullZero]];
+	[bottomPoints addObject:[NSValue valueWithCGPoint:bottomPointFull]];
+	return bottomPoints;
 }
 
 + (UIBezierPath *)linesToPoints:(NSArray *)points {

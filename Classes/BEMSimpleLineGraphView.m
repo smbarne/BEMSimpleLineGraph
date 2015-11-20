@@ -585,6 +585,7 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     line.backgroundColor = [UIColor clearColor];
     line.topColor = self.colorTop;
     line.bottomColor = self.colorBottom;
+	line.rangeColor = self.highlightedRangeColor;
     line.topAlpha = self.alphaTop;
     line.bottomAlpha = self.alphaBottom;
     line.topGradient = self.gradientTop;
@@ -626,6 +627,10 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     } else line.averageLine = self.averageLine;
     
     line.disableMainLine = self.displayDotsOnly;
+
+	if ([self.dataSource respondsToSelector:@selector(highlightedRange)]) {
+		line.highlightedRange = [self.dataSource highlightedRange];
+	}
     
     [self addSubview:line];
     [self sendSubviewToBack:line];
@@ -881,12 +886,15 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     }
     
     // Set the final center point of the x-axis labels
-    if (self.positionYAxisRight) {
-        center = CGPointMake(positionOnXAxis, self.frame.size.height - lRect.size.height/2);
-    } else {
-        center = CGPointMake(positionOnXAxis, self.frame.size.height - lRect.size.height/2);
-    }
-    
+//    if (self.positionYAxisRight) {
+//        center = CGPointMake(positionOnXAxis, self.frame.size.height - lRect.size.height/2);
+//    } else {
+//        center = CGPointMake(positionOnXAxis, self.frame.size.height - lRect.size.height/2);
+//    }
+
+	center = CGPointMake(positionOnXAxis, self.frame.size.height - lRect.size.height + 5);
+
+
     CGRect rect = labelXAxis.frame;
     rect.size = lRect.size;
     labelXAxis.frame = rect;

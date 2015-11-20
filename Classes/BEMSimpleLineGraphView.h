@@ -224,6 +224,9 @@ IB_DESIGNABLE @interface BEMSimpleLineGraphView : UIView <UIGestureRecognizerDel
 /// Color of the bottom part of the graph (between the line and the X-axis).
 @property (strong, nonatomic) IBInspectable UIColor *colorBottom;
 
+/// Color of the highlighted range part of the graph.
+@property (strong, nonatomic) IBInspectable UIColor *highlightedRangeColor;
+
 
 /// Alpha of the bottom part of the graph (between the line and the X-axis).
 @property (nonatomic) IBInspectable CGFloat alphaBottom;
@@ -397,6 +400,8 @@ IB_DESIGNABLE @interface BEMSimpleLineGraphView : UIView <UIGestureRecognizerDel
  @param graph The graph object which is requesting the label on the specified X-Axis position.
  @param index The index from left to right of a given label on the X-axis. Is the same index as the one for the points. The first value for the index is 0. */
 - (nullable NSString *)lineGraph:(nonnull BEMSimpleLineGraphView *)graph labelOnXAxisForIndex:(NSInteger)index;
+
+- (NSRange)highlightedRange;
 
 
 @end

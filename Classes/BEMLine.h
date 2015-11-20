@@ -88,6 +88,8 @@ typedef NS_ENUM(NSUInteger, BEMLineGradientDirection) {
 /** Draws everything but the main line on the graph; correlates to the \p displayDotsOnly property.  Default: NO */
 @property (assign, nonatomic) BOOL disableMainLine;
 
+@property (nonatomic) NSRange highlightedRange;
+
 
 
 //----- COLORS -----//
@@ -103,6 +105,9 @@ typedef NS_ENUM(NSUInteger, BEMLineGradientDirection) {
 
 /// The color of the area below the line, inside of its superview
 @property (strong, nonatomic) UIColor *bottomColor;
+
+/// The color of the area below the line, inside of its highlighted range.
+@property (strong, nonatomic) UIColor *rangeColor;
 
 /// A color gradient applied to the area below the line, inside of its superview. If set, it will be drawn on top of the fill from the \p bottomColor property.
 @property (assign, nonatomic) CGGradientRef bottomGradient;
